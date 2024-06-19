@@ -15,18 +15,18 @@ class TestOgrExport(TestCase):
     temp_import = "test_gdal_import_map"
 
     # Output of r.univar
-    univar_string = """n=60020100
-null_cells=0
-cells=60020100
-min=37
-max=183
-range=146
-mean=120.311390684121
-mean_of_abs=120.311390684121
-stddev=52.7291612829331
-variance=2780.36444960157
-coeff_var=43.8272394518107
-sum=7221101700
+    univar_string = """n=616509
+null_cells=506073
+cells=1122582
+min=0
+max=199
+range=199
+mean=87.1764564669778
+mean_of_abs=87.1764564669778
+stddev=62.4325833627095
+variance=3897.82746534167
+coeff_var=71.6163352961689
+sum=53745070
 """
 
     @classmethod
@@ -49,6 +49,8 @@ sum=7221101700
     def test_gpkg_format(self):
         """Tests output to GeoPackage format"""
 
+        self.runModule("g.region", raster=self.test_map)
+
         self.assertModule(
             "r.out.gdal",
             "Export to GeoPackage Format",
@@ -66,8 +68,6 @@ sum=7221101700
             output=self.temp_import,
         )
 
-        self.runModule("g.region", raster=self.temp_import)
-
         self.assertRasterFitsUnivar(
             raster=self.temp_import,
             reference=self.univar_string,
@@ -76,6 +76,8 @@ sum=7221101700
 
     def test_gtiff_format(self):
         """Tests output to GeoTiff format"""
+
+        self.runModule("g.region", raster=self.test_map)
 
         self.assertModule(
             "r.out.gdal",
@@ -93,8 +95,6 @@ sum=7221101700
             input=f"{self.test_map}.gtiff",
             output=self.temp_import,
         )
-
-        self.runModule("g.region", raster=self.temp_import)
 
         self.assertRasterFitsUnivar(
             raster=self.temp_import,
