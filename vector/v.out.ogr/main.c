@@ -324,6 +324,7 @@ int main(int argc, char *argv[])
                             inwkt = NULL;
                         }
                         proj_destroy(source_crs);
+                        OSRDestroySpatialReference(Ogr_projection);
                         Ogr_projection = NULL;
 
                         if (inwkt) {
