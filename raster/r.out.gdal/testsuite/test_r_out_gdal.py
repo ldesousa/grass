@@ -33,6 +33,7 @@ sum=53745070
     def setUpClass(cls):
         """Use temporary region settings"""
         cls.use_temp_region()
+        cls.runModule("g.region", raster=cls.test_map)
 
     @classmethod
     def tearDownClass(cls):
@@ -48,8 +49,6 @@ sum=53745070
 
     def test_gpkg_format(self):
         """Tests output to GeoPackage format"""
-
-        self.runModule("g.region", raster=self.test_map)
 
         self.assertModule(
             "r.out.gdal",
@@ -76,8 +75,6 @@ sum=53745070
 
     def test_gtiff_format(self):
         """Tests output to GeoTiff format"""
-
-        self.runModule("g.region", raster=self.test_map)
 
         self.assertModule(
             "r.out.gdal",
